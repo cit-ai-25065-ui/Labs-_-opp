@@ -1,0 +1,112 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <iomanip>
+
+using namespace std;
+
+struct InventoryItem {
+    string itemCode;
+    string itemName;
+    double cost;
+    double sellingPrice;
+};
+
+int counter = 31203;
+
+InventoryItem insertItem() {
+    InventoryItem item;
+    
+    cin >> item.itemName;
+    cin >> item.cost;
+    
+    item.sellingPrice = item.cost + (item.cost * 0.40);
+    
+    string prefix = "";
+    for (int i = 0; i < 3 && i < item.itemName.length(); i++) {
+        prefix += toupper(item.itemName[i]);
+    }
+    
+    item.itemCode = prefix + "_" + to_string(counter++);
+    
+    return item;
+}
+
+void displayStock(const InventoryItem* items) {
+    cout << left << setw(15) << "Item Code" 
+         << setw(15) << "Item Name" 
+         << setw(12) << "Cost" 
+         << setw(15) << "Selling Price" << endl;
+    
+    for (int i = 0; i < 10; i++) {
+        cout << left << setw(15) << items[i].itemCode 
+             << setw(15) << items[i].itemName 
+             << setw(12) << items[i].cost 
+             << setw(15) << items[i].sellingPrice << endl;
+    }
+}
+
+int main() {
+    InventoryItem inventory[10];
+
+    for (int i = 0; i < 10; i++) {
+        inventory[i] = insertItem();
+    }
+
+    displayStock(inventory);
+
+    return 0;
+}
+
+*//*
+
+#include <iostream>
+using namespace std;
+
+struct FeetInches {
+    int feet;
+};
+
+struct RoomDimension {
+    FeetInches length;
+    FeetInches width;
+};
+
+int computeTheCarpetingCost(const RoomDimension& room) {
+    int area = room.length.feet * room.width.feet;
+    return area * 18;
+}
+
+int main() {
+    int numRooms;
+    cin >> numRooms;
+
+    RoomDimension* rooms = new RoomDimension[numRooms];
+
+    for (int i = 0; i < numRooms; i++) {
+        cin >> rooms[i].length.feet;
+        cin >> rooms[i].width.feet;
+    }
+
+    int choice;
+    do {
+        cout << "1. Total Cost\n2. Room Cost\n3. Exit\nChoice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            int totalCost = 0;
+            for (int i = 0; i < numRooms; i++) {
+                totalCost += computeTheCarpetingCost(rooms[i]);
+            }
+            cout << "Total Cost: " << totalCost << " Rs\n";
+        } 
+        else if (choice == 2) {
+            for (int i = 0; i < numRooms; i++) {
+                cout << "Room " << (i + 1) << ": " << computeTheCarpetingCost(rooms[i]) << " Rs\n";
+            }
+        }
+    } while (choice != 3);
+
+    delete[] rooms;
+    return 0;
+}
