@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+
+int* resizeArray(int inArray[], const int size) {
+    int newSize = size * 2;
+    int* newArray = new int[newSize];
+
+    // النصف الأول: العناصر الأصلية
+    for (int i = 0; i < size; i++) {
+        newArray[i] = inArray[i];
+    }
+
+    // النصف الثاني: مضاعفة العناصر الأصلية
+    for (int i = 0; i < size; i++) {
+        newArray[size + i] = inArray[i] * 2;
+    }
+
+    return newArray;
+}
+
+int main() {
+    int size;
+    cout << "Enter size of the array: ";
+    cin >> size;
+
+    int* arr = new int[size];
+    cout << "Enter elements of array: ";
+    for (int i = 0; i < size; i++) {
+        cin >> arr[i];
+    }
+
+    int* resizedArr = resizeArray(arr, size);
+
+    cout << "Resized array: ";
+    for (int i = 0; i < size * 2; i++) {
+        cout << resizedArr[i] << (i == size * 2 - 1 ? "" : ", ");
+    }
+    cout << endl;
+
+    // تحرير الذاكرة
+    delete[] arr;
+    delete[] resizedArr;
+
+    return 0;
+}
+
+*//*
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter the dimension of square matrix (n x n): ";
+    cin >> n;
+
+    int** matrix = new int*[n];
+    for (int i = 0; i < n; i++) {
+        matrix[i] = new int[n];
+    }
+
+    cout << "Enter the elements of the matrix:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    bool isDiagonal = true;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            // العناصر خارج القطر الرئيسي يجب أن تكون 0
+            if (i != j && matrix[i][j] != 0) {
+                isDiagonal = false;
+                break;
+            }
+        }
+    }
+
+    if (isDiagonal) {
+        cout << "The matrix is a diagonal matrix." << endl;
+    } else {
+        cout << "The matrix is NOT a diagonal matrix." << endl;
+    }
+
+    // تحرير الذاكرة
+    for (int i = 0; i < n; i++) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+
+    return 0;
+}
+
+*//*
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() {
+    char str[30];
+    int count;
+
+    cout << "Enter a string (max 29 chars): ";
+    cin >> str;
+
+    cout << "Enter count of letters to display: ";
+    cin >> count;
+
+    int length = strlen(str);
+
+    // التحقق من أن العدد المطلوب ضمن نطاق طول النص
+    if (count < 0 || count > length) {
+        cout << "Error: Out of range count!" << endl;
+    } else {
+        cout << "Substring: ";
+        for (int i = 0; i < count; i++) {
+            cout << str[i];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
